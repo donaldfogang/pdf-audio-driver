@@ -1,0 +1,20 @@
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "PDF Audio Driver",
+    short_name: "PDF Audio",
+    description: "Écoutez vos PDF à voix haute, page par page.",
+    start_url: "/",
+    display: "standalone",
+    orientation: "portrait",
+    lang: "fr",
+    background_color: "#070b12",
+    theme_color: "#070b12",
+    icons: [
+      { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+    ],
+  };
+}
