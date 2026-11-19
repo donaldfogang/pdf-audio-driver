@@ -98,8 +98,8 @@ def _local(text: str, lang: str, out: Path) -> None:
 PROVIDERS = {"edge": (_edge, ".mp3"), "gtts": (_gtts, ".mp3"), "local": (_local, ".wav")}
 
 
-def synthesize(text: str, lang: str, out_base: Path) -> Path:
-    """Génère l'audio et retourne le fichier créé (.mp3 ou .wav)."""
+def synthesize(text: str, lang: str, out_base: Path) -> tuple[Path, str]:
+    """Génère l'audio et retourne (fichier .mp3/.wav, nom du moteur utilisé)."""
     if lang not in SUPPORTED_LANGS:
         raise ValueError("Langue non supportée")
     out_base.parent.mkdir(parents=True, exist_ok=True)
@@ -115,7 +115,7 @@ def synthesize(text: str, lang: str, out_base: Path) -> Path:
                 raise TTSError("fichier audio vide")
             final = out_base.with_suffix(ext)
             os.replace(part, final)  # écriture atomique
-            return final
+            return final, name
         except Exception as exc:
             logger.warning("Moteur vocal '%s' en échec : %s: %s", name, type(exc).__name__, str(exc)[:200])
             errors.append(f"{name} ({type(exc).__name__})")

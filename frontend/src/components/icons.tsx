@@ -16,3 +16,4 @@ export const NextIcon = ({ className }: P) => <svg {...solid} className={classNa
 export const PrevIcon = ({ className }: P) => <svg {...solid} className={className}><path d="M18.5 5.8v12.4a.8.8 0 0 1-1.25.66l-8.5-6.2a.8.8 0 0 1 0-1.32l8.5-6.2a.8.8 0 0 1 1.25.66ZM5 5h2v14H5z" /></svg>;
 export const SpinnerIcon = ({ className }: P) => <svg {...line} className={`animate-spin ${className ?? ""}`}><path d="M12 3a9 9 0 1 0 9 9" /></svg>;
 export const MicIcon = ({ className }: P) => <svg {...line} className={className}><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>;
+export const SearchIcon = ({ className }: P) => <svg {...line} className={className}><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>;

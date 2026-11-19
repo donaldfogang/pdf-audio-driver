@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "PDF Audio Driver",
-    short_name: "PDF Audio",
-    description: "Écoutez vos PDF à voix haute, page par page.",
+    name: "pdf-audio",
+    short_name: "pdf-audio",
+    description: "Transformez n’importe quel PDF en audio.",
     start_url: "/",
     display: "standalone",
     orientation: "portrait",

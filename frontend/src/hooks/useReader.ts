@@ -4,12 +4,14 @@ import { fetchAudioUrl, getPageText, type DocInfo } from "@/lib/api";
 
 export type Status = "idle" | "loading" | "playing" | "paused";
 
-export function useReader(doc: DocInfo) {
+export function useReader(doc: DocInfo, onPageEnded?: (page: number, seconds: number) => void) {
   const audio = useRef<HTMLAudioElement | null>(null);
   const run = useRef(0);                       // invalide les chargements obsolètes
   const pageRef = useRef(1);
   const rateRef = useRef(1);
   const cache = useRef(new Map<number, Promise<string>>());
+  const endedCb = useRef(onPageEnded);
+  useEffect(() => { endedCb.current = onPageEnded; });
 
   const [page, setPage] = useState(1);
   const [text, setText] = useState("");
@@ -86,7 +88,10 @@ export function useReader(doc: DocInfo) {
       loadedmetadata: () => setDuration(a.duration),
       playing: () => setStatus("playing"),
       pause: () => { if (a.getAttribute("src") && !a.ended) setStatus("paused"); },
-      ended: () => (pageRef.current < doc.page_count ? loadPage(pageRef.current + 1) : stop()),
+      ended: () => {
+        endedCb.current?.(pageRef.current, isFinite(a.duration) ? a.duration : 0);
+        return pageRef.current < doc.page_count ? loadPage(pageRef.current + 1) : stop();
+      },
       error: () => { if (a.getAttribute("src")) { setError("Lecture audio impossible."); setStatus("paused"); } },
     };
     Object.entries(on).forEach(([k, f]) => a.addEventListener(k, f));

@@ -1,14 +1,14 @@
-# PDF Audio Driver
+# pdf-audio
 
-Lecteur audio de PDF pour conducteurs. Frontend Next.js (Vercel) + Backend FastAPI (Docker).
+Transformez n'importe quel PDF en audio : lecture page par page, texte suivi à l'écran, aperçu de la page d'origine,
+recherche, chapitres, reprise automatique, minuteur de veille, commandes vocales, comptes et bibliothèque.
 
-## Backend
-cd backend && python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+- `backend/` : API FastAPI (extraction PDF, voix multi-moteurs, comptes, statistiques admin) + `tests/`
+- `frontend/` : application Next.js (App Router, Tailwind)
+- `supabase/schema.sql` : tables et règles de sécurité (comptes, bibliothèque, événements)
+- `docs/SETUP.md` : mise en service pas à pas
 
-## Frontend
-cd frontend
-npx create-next-app@latest . --ts --tailwind --app --src-dir --import-alias "@/*"   # puis copier les fichiers de src/ par-dessus
-echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local
-npm run dev
+## En local
+Backend : `cd backend && python -m uvicorn app.main:app --reload --port 8000`
+Frontend : `cd frontend && npm install && npm run dev` (variables : `frontend/.env.example`)
+Tests backend : `cd backend && python -m pytest tests`
